@@ -41,5 +41,3 @@ class Game
         Gtk.main
     end
 end
-
-game = Game.new
