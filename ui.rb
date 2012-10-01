@@ -91,6 +91,8 @@ class Game
             @dealerHand.push(@shoe.draw_card)
             @dealerHand.push(@shoe.draw_card)
             @hideCard = true
+            @hand.push(@shoe.draw_card)
+            @hand.push(@shoe.draw_card)
             refreshHandFrame
             refreshDealerHandFrame
         end
