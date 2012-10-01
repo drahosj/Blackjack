@@ -49,7 +49,7 @@ class Shoe
         oldCards = @cards
         @cards = Array.new
         oldCards.size.times do
-            @cards.push(oldCards.delete_at(Random.rand(oldCards.size)))
+            @cards.push(oldCards.delete_at(rand(oldCards.size)))
         end
     end
     def print_deck
