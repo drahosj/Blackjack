@@ -130,6 +130,9 @@ class Game
 
         @dealerHandBox = Gtk::VBox.new(false, 0)
         @dealerHandFrame.add(@dealerHandBox)
+        
+        refreshDealerHandFrame
+        refreshHandFrame
 
         @window.show_all
 
