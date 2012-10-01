@@ -41,9 +41,15 @@ class Shoe
             Card::SUITS.each_key do |suit|
                 Card::VALUES.each_key do |value|
                     @cards.push(Card.new(value, suit))
-                    puts "Hi"
                 end
             end
+        end
+    end
+    def shuffle
+        oldCards = @cards
+        @cards = Array.new
+        oldCards.size.times do
+            @cards.push(oldCards.delete_at(Random.rand(oldCards.size)))
         end
     end
     def print_deck
