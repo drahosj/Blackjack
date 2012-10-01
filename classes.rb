@@ -59,6 +59,9 @@ class Shoe
             i += 1
         end
     end
+    def getCardsLeft
+        return @cards.size
+    end
     def draw_card
         return @cards.pop
     end
