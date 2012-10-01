@@ -59,4 +59,7 @@ class Shoe
             i += 1
         end
     end
+    def draw_card
+        return @cards.pop
+    end
 end
