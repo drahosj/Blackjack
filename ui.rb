@@ -6,10 +6,11 @@ class Game
         @hand = Array.new
         @hideCard = true
         @dealerHand = Array.new
-        @dealerHand.push(@shoe.draw_card)
-        @dealerHand.push(@shoe.draw_card)
         @shoe = Shoe.new(4)
         @shoe.shuffle
+
+        @dealerHand.push(@shoe.draw_card)
+        @dealerHand.push(@shoe.draw_card)
 
         spawnUI
     end
