@@ -4,142 +4,142 @@ require './classes.rb'
 class Game
     def initialize
         @hand = Array.new
-        @hideCard = true
-        @dealerHand = Array.new
+        @hide_card = true
+        @dealer_hand = Array.new
         @shoe = Shoe.new(4)
         @shoe.shuffle
 
-        @dealerHand.push(@shoe.draw_card)
-        @dealerHand.push(@shoe.draw_card)
+        @dealer_hand.push(@shoe.draw_card)
+        @dealer_hand.push(@shoe.draw_card)
 
         @hand.push(@shoe.draw_card)
         @hand.push(@shoe.draw_card)
 
-        spawnUI
+        spawn_uI
     end
-    def refreshDealerHandFrame
-        @dealerHandLabels.each do |label|
+    def refresh_dealer_hand_frame
+        @dealer_hand_labels.each do |label|
             label.destroy
         end
 
-        @dealerHandLabels = Array.new
+        @dealer_hand_labels = Array.new
         
         i = 0
-        @dealerHand.each do |card|
-            if (i == 0) and @hideCard
-                @dealerHandLabels.push(Gtk::Label.new("?????????"))
+        @dealer_hand.each do |card|
+            if (i == 0) and @hide_card
+                @dealer_hand_labels.push(Gtk::Label.new("?????????"))
             else
-                @dealerHandLabels.push(Gtk::Label.new(card.to_s, true))
+                @dealer_hand_labels.push(Gtk::Label.new(card.to_s, true))
             end
             i += 1
         end
 
-        @dealerHandLabels.each do |label|
-            @dealerHandBox.pack_start(label, false, false, 2)
+        @dealer_hand_labels.each do |label|
+            @dealer_hand_box.pack_start(label, false, false, 2)
         end
         
-        @buttonDraw.label = ("_Draw [#{@shoe.getCardsLeft.to_s}]")
-        @dealerHandBox.show_all
+        @button_draw.label = ("_draw [#{@shoe.get_cards_left.to_s}]")
+        @dealer_hand_box.show_all
     end
 
-    def refreshHandFrame
-        @handLabels.each do |label|
+    def refresh_hand_frame
+        @hand_labels.each do |label|
             label.destroy
         end
 
-        @handLabels = Array.new
+        @hand_labels = Array.new
         
         @hand.each do |card|
-            @handLabels.push(Gtk::Label.new(card.to_s, true))
+            @hand_labels.push(Gtk::Label.new(card.to_s, true))
         end
 
-        @handLabels.each do |label|
-            @handBox.pack_start(label, false, false, 2)
+        @hand_labels.each do |label|
+            @hand_box.pack_start(label, false, false, 2)
         end
 
-        @buttonDraw.label = ("_Draw [#{@shoe.getCardsLeft.to_s}]")
-        @handBox.show_all
+        @button_draw.label = ("_draw [#{@shoe.get_cards_left.to_s}]")
+        @hand_box.show_all
     end
-    def spawnUI
-        @handLabels = Array.new
-        @dealerHandLabels = Array.new
+    def spawn_uI
+        @hand_labels = Array.new
+        @dealer_hand_labels = Array.new
 
-        @buttonDraw = Gtk::Button.new("_Draw [#{@shoe.getCardsLeft.to_s}]")
-        @buttonDraw.signal_connect("clicked") do
+        @button_draw = Gtk::Button.new("_draw [#{@shoe.get_cards_left.to_s}]")
+        @button_draw.signal_connect("clicked") do
             @hand.push(@shoe.draw_card)
-            refreshHandFrame
+            refresh_hand_frame
         end
 
-        @buttonNewHand = Gtk::Button.new("_New Hand")
-        @buttonNewHand.signal_connect("clicked") do
+        @button_new_hand = Gtk::Button.new("_new Hand")
+        @button_new_hand.signal_connect("clicked") do
             @hand = Array.new
-            @dealerHand = Array.new
-            @dealerHand.push(@shoe.draw_card)
-            @dealerHand.push(@shoe.draw_card)
-            @hideCard = true
+            @dealer_hand = Array.new
+            @dealer_hand.push(@shoe.draw_card)
+            @dealer_hand.push(@shoe.draw_card)
+            @hide_card = true
             @hand.push(@shoe.draw_card)
             @hand.push(@shoe.draw_card)
-            refreshDealerHandFrame
-            refreshHandFrame
+            refresh_dealer_hand_frame
+            refresh_hand_frame
         end
 
-        @buttonNewShoe = Gtk::Button.new("_Shuffle Deck")
-        @buttonNewShoe.signal_connect("clicked") do
+        @button_new_shoe = Gtk::Button.new("_shuffle Deck")
+        @button_new_shoe.signal_connect("clicked") do
             @shoe = Shoe.new(4)
             @hand = Array.new
-            @dealerHand = Array.new
-            @dealerHand.push(@shoe.draw_card)
-            @dealerHand.push(@shoe.draw_card)
-            @hideCard = true
+            @dealer_hand = Array.new
+            @dealer_hand.push(@shoe.draw_card)
+            @dealer_hand.push(@shoe.draw_card)
+            @hide_card = true
             @hand.push(@shoe.draw_card)
             @hand.push(@shoe.draw_card)
-            refreshHandFrame
-            refreshDealerHandFrame
+            refresh_hand_frame
+            refresh_dealer_hand_frame
         end
 
-        @dealerButtonDraw = Gtk::Button.new("Dea_ler Draw")
-        @dealerButtonDraw.signal_connect("clicked") do
-            unless @hideCard
-                @dealerHand.push(@shoe.draw_card)
+        @dealer_button_draw = Gtk::Button.new("Dea_ler Draw")
+        @dealer_button_draw.signal_connect("clicked") do
+            unless @hide_card
+                @dealer_hand.push(@shoe.draw_card)
             else 
-                @hideCard = false
+                @hide_card = false
             end
-            refreshDealerHandFrame
+            refresh_dealer_hand_frame
         end
 
         @window = Gtk::Window.new
         @window.signal_connect("delete_event") { false }
         @window.signal_connect("destroy") { Gtk.main_quit }
         
-        @buttonBox = Gtk::VBox.new(false, 0)
-        @buttonBox.pack_start(@buttonDraw, false, false, 10)
-        @buttonBox.pack_start(@buttonNewHand, false, false, 10)
-        @buttonBox.pack_start(@buttonNewShoe, false, false, 15)
+        @button_box = Gtk::VBox.new(false, 0)
+        @button_box.pack_start(@button_draw, false, false, 10)
+        @button_box.pack_start(@button_new_hand, false, false, 10)
+        @button_box.pack_start(@button_new_shoe, false, false, 15)
 
-        @dealerButtonBox = Gtk::VBox.new(false, 0)
-        @dealerButtonBox.pack_start(@dealerButtonDraw, false, false, 10)
+        @dealer_button_box = Gtk::VBox.new(false, 0)
+        @dealer_button_box.pack_start(@dealer_button_draw, false, false, 10)
 
-        @handFrame = Gtk::Frame.new("Hand")
-        @dealerHandFrame = Gtk::Frame.new("Dealer")
+        @hand_frame = Gtk::Frame.new("Hand")
+        @dealer_hand_frame = Gtk::Frame.new("Dealer")
         
-        @hBox = Gtk::HBox.new(false, 0)
-        @hBox.pack_start(@buttonBox, false, false, 5)
-        @hBox.pack_start(@handFrame, true, true, 5)
-        @hBox.pack_start(@dealerHandFrame, true, true, 5)
-        @hBox.pack_start(@dealerButtonBox, false, false, 5)
+        @h_box = Gtk::HBox.new(false, 0)
+        @h_box.pack_start(@button_box, false, false, 5)
+        @h_box.pack_start(@hand_frame, true, true, 5)
+        @h_box.pack_start(@dealer_hand_frame, true, true, 5)
+        @h_box.pack_start(@dealer_button_box, false, false, 5)
 
         @window.border_width = 10
         @window.set_default_size(700, 170)
-        @window.add(@hBox)
+        @window.add(@h_box)
 
-        @handBox = Gtk::VBox.new(false, 0)
-        @handFrame.add(@handBox)
+        @hand_box = Gtk::VBox.new(false, 0)
+        @hand_frame.add(@hand_box)
 
-        @dealerHandBox = Gtk::VBox.new(false, 0)
-        @dealerHandFrame.add(@dealerHandBox)
+        @dealer_hand_box = Gtk::VBox.new(false, 0)
+        @dealer_hand_frame.add(@dealer_hand_box)
         
-        refreshDealerHandFrame
-        refreshHandFrame
+        refresh_dealer_hand_frame
+        refresh_hand_frame
 
         @window.show_all
 

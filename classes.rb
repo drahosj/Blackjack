@@ -23,21 +23,21 @@ class Card
 	attr_reader :suit
 	attr_reader :value
 
-	def initialize(aValue, aSuit)
-    	@suit = aSuit
-		@value = aValue
+	def initialize(a_value, a_suit)
+    	@suit = a_suit
+		@value = a_value
 	end
     def to_s
-        retVal = VALUES[@value] * 1
-        retVal << " of "
-        retVal << SUITS[@suit]
-        return retVal
+        ret_val = VALUES[@value] * 1
+        ret_val << " of "
+        ret_val << SUITS[@suit]
+        return ret_val
     end
 end
 class Shoe
-	def initialize(numDecks)
+	def initialize(num_decks)
 		@cards = Array.new()
-		numDecks.times do
+		num_decks.times do
             Card::SUITS.each_key do |suit|
                 Card::VALUES.each_key do |value|
                     @cards.push(Card.new(value, suit))
@@ -46,10 +46,10 @@ class Shoe
         end
     end
     def shuffle
-        oldCards = @cards
+        old_cards = @cards
         @cards = Array.new
-        oldCards.size.times do
-            @cards.push(oldCards.delete_at(rand(oldCards.size)))
+        old_cards.size.times do
+            @cards.push(old_cards.delete_at(rand(old_cards.size)))
         end
     end
     def print_deck
@@ -59,7 +59,7 @@ class Shoe
             i += 1
         end
     end
-    def getCardsLeft
+    def get_cards_left
         return @cards.size
     end
     def draw_card
